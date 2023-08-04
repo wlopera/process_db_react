@@ -13,6 +13,7 @@ class DatabaseService {
               ...response.data,
               alert: {
                 type: "SUCCESS",
+                title: `Consulta de tabla satisfactoria.`,
                 text: `Consulta de tabla satisfactoria.`,
               },
             };
@@ -20,8 +21,9 @@ class DatabaseService {
             return {
               ...response.data,
               alert: {
-                type: "SUCCESS",
-                text: `No hay registros disponibles`,
+                type: "ERROR",
+                title: "No hay registros disponibles",
+                text: response.data.error,
               },
             };
           }
@@ -30,18 +32,19 @@ class DatabaseService {
             ...response.data,
             alert: {
               type: "ERROR",
-              text: `Error cargando consultando tabla: [${response.data.code}]: ${response.data.message}`,
+              title: "Error cargando consulta de la tabla",
+              text: response.data,
             },
           };
         }
       });
     } catch (error) {
-      const errorMessage = error;
       return {
         data: response.data,
         message: {
           type: "ERROR",
-          text: `Error consultando tabla: ${errorMessage}`,
+          title: "Error consultando tabla",
+          text: error,
         },
       };
     }

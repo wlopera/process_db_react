@@ -11,6 +11,7 @@ import "react-table/react-table.css";
 const QueryForm = () => {
   const [query, setQuery] = useState("SELECT * FROM libros");
   const [showError, setShowError] = useState(false);
+  const [message, setMessage] = useState("");
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
 
@@ -24,8 +25,16 @@ const QueryForm = () => {
 
   const handleSend = async (event) => {
     event.preventDefault();
+    setShowError(false);
+    setData([]);
+
     if (validateDriver()) {
       setShowError(true);
+      setMessage({
+        type: "ERROR",
+        title: "Error Conexión DB",
+        text: "Validar datos de conexión a la DB y el query de consulta.",
+      });
     } else {
       const response = await service.getQuery({
         host,
@@ -34,17 +43,19 @@ const QueryForm = () => {
         password,
         query,
       });
-      console.log(55555, response);
-      const columns = response.columns.map((item) => ({
-        Header: item.value,
-        accessor: item.key,
-      }));
-      setColumns(columns);
-      setData(response.data);
+      if (response.code === 200) {
+        const columns = response.columns.map((item) => ({
+          Header: item.value,
+          accessor: item.key,
+        }));
+        setColumns(columns);
+        setData(response.data);
+      } else {
+        setMessage(response.alert);
+        setShowError(true);
+      }
     }
   };
-
-  console.log(12345, data, columns);
 
   const validateDriver = () => {
     if (host.trim().length === 0) {
@@ -88,7 +99,15 @@ const QueryForm = () => {
       <Row>
         {showError && (
           <Alert color="danger">
-            Validar datos de conexión a la DB y el query de consulta.
+            <h4 className="alert-heading">{message.title}</h4>
+            <hr />
+            <ul>
+              {Object.keys(message.text).map((item) => (
+                <li className="mb-0">
+                  {item}: {message.text[item]}
+                </li>
+              ))}
+            </ul>
           </Alert>
         )}
 

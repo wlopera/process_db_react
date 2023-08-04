@@ -18,16 +18,32 @@ const instance = axios.create({
   },
 });
 
-
 // Función para configurar el token en el encabezado
 const setAuthToken = (token) => {
-  console.log("set-token-agregado:", token)
+  console.log("set-token-agregado:", token);
   if (token) {
     instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
     delete instance.defaults.headers.common["Authorization"];
   }
 };
+
+// Permite controlar mensajes de respuesta de los servicios (mensajes exitosos o con error)
+instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    console.log("Error grave:", error.response);
+    return {
+      data: {
+        code: error.code === "ERR_BAD_RESPONSE" ? 500 : 400,
+        messageCode: error.code,
+        message: error.message,
+      },
+    };
+  }
+);
 
 // Add a request interceptor
 // instance.interceptors.request.use(function (config) {
@@ -39,17 +55,6 @@ const setAuthToken = (token) => {
 
 //   return config;
 // });
-
-// instance.interceptors.response.use(
-//   (response) => {
-//     console.log("response axios-interceptor: ", response);
-//   },
-//   (error) => {
-//     if (error.response.status == 403) {
-//       // refreshToken();
-//     }
-//   }
-// );
 
 // instance.interceptors.response.use(
 //   (response) => {
@@ -78,4 +83,3 @@ const setAuthToken = (token) => {
 // );
 
 export { instance as default, setAuthToken };
-
