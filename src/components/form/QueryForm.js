@@ -42,6 +42,7 @@ const QueryForm = () => {
         user,
         password,
         query,
+        type: "MYSQL",
       });
       if (response.code === 200) {
         const columns = response.columns.map((item) => ({

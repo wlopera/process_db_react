@@ -6,7 +6,6 @@ class DatabaseService {
   getQuery(data) {
     try {
       return http.post(`${PATH_API}/getTableByQuery`, data).then((response) => {
-        console.log(123, response);
         if (response.data.code === 200) {
           if (response.data.data.length > 0) {
             return {
