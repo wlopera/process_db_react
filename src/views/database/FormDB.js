@@ -1,20 +1,8 @@
 import React, { useState } from "react";
-import {
-  Card,
-  CardTitle,
-  Row,
-  Col,
-  Button,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  CardText,
-} from "reactstrap";
+import { TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import QueryForm from "../../components/form/QueryForm";
-import SPForm from "../../components/form/SPForm";
+import SPForm from '../../components/form/SPForm'
 
 const FormDB = () => {
   const [activeTab, setActiveTab] = useState("1");

@@ -1,12 +1,21 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Input } from "reactstrap";
-import { updateParam, detailsParam } from "../../redux/params/Action";
+import {
+  Table,
+  Input,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+} from "reactstrap";
+import { updateParam } from "../../redux/params/Action";
 
 const ParameterDetails = () => {
-  const { edit, show, param } = useSelector(
-    (state) => state.paramsReducer.paramDetails
-  );
+  const {
+    edit,
+    show,
+    currentParam: param,
+  } = useSelector((state) => state.paramsReducer);
 
   const dispatch = useDispatch();
 
@@ -16,9 +25,15 @@ const ParameterDetails = () => {
       ...param,
       [name]: value,
     };
-    console.log(44444, payload);
     dispatch(updateParam(param.id, payload.label, payload.value, payload.type));
-    dispatch(detailsParam(true, true, payload));
+  };
+
+  const handleDropDown = (event) => {
+    const payload = {
+      ...param,
+      type: event.target.name,
+    };
+    dispatch(updateParam(param.id, payload.label, payload.value, payload.type));
   };
 
   return show ? (
@@ -67,13 +82,15 @@ const ParameterDetails = () => {
                   <td className="col-3 font-bold">Tipo</td>
                   <td className="col-9">
                     {edit ? (
-                      <Input
-                        type="text"
-                        name="type"
-                        id="type"
-                        value={param.type}
-                        onChange={(e) => handleUpdate(e)}
-                      />
+                      <UncontrolledDropdown>
+                        <DropdownToggle color="success" size="sm" block>
+                          {param.type}
+                        </DropdownToggle>
+                        <DropdownMenu onClick={(e) => handleDropDown(e)}>
+                          <DropdownItem name="IN">IN</DropdownItem>
+                          <DropdownItem name="OUT">OUT</DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
                     ) : (
                       ": " + param.type
                     )}

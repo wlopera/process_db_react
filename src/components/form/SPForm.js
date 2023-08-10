@@ -1,63 +1,48 @@
-import React, { useState, Fragment } from "react";
-import Parameters from "../procedure/Parameters";
-import ParameterDetails from "../procedure/ParameterDetails";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
+import classnames from "classnames";
+import Params from "./sp/Params";
 
 const SPForm = () => {
-  const [showLeft, setShowLeft] = useState(false);
-  const [showRight, setshowRight] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
 
-  const params = useSelector(
-    (state) =>
-      state.paramsReducer.params
-  );
-
-  const showLeftPart = () => {
-    setShowLeft(!showLeft);
-  };
-
-  const showRightPart = () => {
-    setshowRight(!showRight);
+  const toggle = (tab) => {
+    if (activeTab !== tab) setActiveTab(tab);
   };
 
   return (
-    <Fragment>
-      <div className="">
-        <div className="">
-          <div
-            className={
-              "right-left-part " +
-              (showRight === true ? "show-right-left-panel" : "")
-            }
+    <div>
+      <Nav tabs>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === "1" })}
+            onClick={() => {
+              toggle("1");
+            }}
           >
-            <Parameters showRightPart={showRightPart} params={params} />
-          </div>
-          <div
-            className={
-              "right-right-part " +
-              (showRight === true
-                ? "show-right-right-panel"
-                : "hide-right-right-part")
-            }
+            Parámetros
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === "2" })}
+            onClick={() => {
+              toggle("2");
+            }}
           >
-            <span
-              onClick={() => {
-                showRightPart();
-              }}
-              className={
-                "hide-right-right-part d-block d-md-none " +
-                (showRight === true ? "right-right-part-open" : "")
-              }
-            >
-              <i className="fas fa-times"></i>
-            </span>
-            <div>
-              <ParameterDetails />
-            </div>
-          </div>
-        </div>
-      </div>
-    </Fragment>
+            Llamar SP
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent className="p-4" activeTab={activeTab}>
+        <TabPane tabId="1">
+          <Params />
+        </TabPane>
+        <TabPane tabId="2">
+          <h1>Consultas</h1>
+        </TabPane>
+      </TabContent>
+    </div>
   );
 };
 

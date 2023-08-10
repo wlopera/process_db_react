@@ -12,13 +12,11 @@ const Parameters = ({ showRightPart, params }) => {
 
   const handleAddClick = () => {
     dispatch(addParam());
-    dispatch(detailsParam(false, false, {}));
     setActive(0);
   };
 
   const handleDeleteClick = (id) => {
     dispatch(deleteParam(id));
-    dispatch(detailsParam(false, false, {}));
   };
 
   const handleClick = (param) => {
@@ -32,7 +30,6 @@ const Parameters = ({ showRightPart, params }) => {
   };
 
   const handleEditClick = (param) => {
-    console.log(123456, param)
     dispatch(detailsParam(true, true, param))
     setActive(param.id);
     showRightPart();
