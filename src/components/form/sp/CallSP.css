@@ -1,0 +1,36 @@
+.table_thead
+{
+  background-color: #3f87a6;
+  color: #fff;
+}
+
+.table_tbody {
+  background-color: #e4f0f5;
+}
+
+.table_caption {
+  padding: 10px;
+  caption-side: bottom;
+}
+
+.table_table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200, 200, 200);
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  width: 100%;
+}
+
+.table_td,
+.table_th {
+  border: 1px solid rgb(190, 190, 190);
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.table_td_left {
+  border: 1px solid rgb(190, 190, 190);
+  padding: 5px 10px;
+  text-align: left;
+}

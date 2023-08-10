@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import Params from "./sp/Params";
+import CallSP from "./sp/CallSP";
 
 const SPForm = () => {
   const [activeTab, setActiveTab] = useState("1");
@@ -39,7 +40,7 @@ const SPForm = () => {
           <Params />
         </TabPane>
         <TabPane tabId="2">
-          <h1>Consultas</h1>
+           <CallSP/>
         </TabPane>
       </TabContent>
     </div>
