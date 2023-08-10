@@ -11,3 +11,10 @@ export const SIDEBAR_TYPE = "SIDEBAR_TYPE";
 
 // FILTRO DB
 export const UPDATE_FILTER = "UPDATE_FILTER";
+
+// PARAM
+export const ADD_PARAM = "ADD_PARAM";
+export const UPDATE_PARAM = "UPDATE_PARAM";
+export const DETAILS_PARAM = "DETAILS_PARAM";
+export const CURRENT_PARAM = "CURRENT_PARAM";
+export const DELETE_PARAM = "DELETE_PARAM";
