@@ -7,12 +7,14 @@ import service from "../../../services/database.service";
 
 import "react-table/react-table.css";
 import "./CallSP.css";
+import InputDB from "../../input/InputDB";
 
 const CallSP = () => {
   const [showError, setShowError] = useState(false);
   const [message, setMessage] = useState("");
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
+  const [procedure, setProcedure] = useState("");
 
   const { host, database, user, password } = useSelector(
     (state) => state.databaseReducer
@@ -30,43 +32,38 @@ const CallSP = () => {
       database,
       user,
       password,
-      procedure: "books_sp",
-      params: params.map((param) => ({      
-          key: param.label,
-          value: param.value,
-          type: param.type
-      }))
+      procedure: procedure,
+      params: params.map((param) => ({
+        key: param.label,
+        value: param.value,
+        type: param.type,
+      })),
     };
 
-    console.log(123, payload)
+    console.log(123, payload);
 
-    // if (validateDriver()) {
-    //   setShowError(true);
-    //   setMessage({
-    //     type: "ERROR",
-    //     title: "Error Conexión DB",
-    //     text: "Validar datos de conexión a la DB y el query de consulta.",
-    //   });
-    // } else {
-    //   const response = await service.getQuery({
-    //     host,
-    //     database,
-    //     user,
-    //     password,
-    //     type: "MYSQL",
-    //   });
-    //   if (response.code === 200) {
-    //     const columns = response.columns.map((item) => ({
-    //       Header: item.value,
-    //       accessor: item.key,
-    //     }));
-    //     setColumns(columns);
-    //     setData(response.data);
-    //   } else {
-    //     setMessage(response.alert);
-    //     setShowError(true);
-    //   }
-    // }
+    if (validateDriver()) {
+      setShowError(true);
+      setMessage({
+        type: "ERROR",
+        title: "Error Conexión DB",
+        text: "Validar datos de conexión a la DB y el query de consulta.",
+      });
+    } else {
+      const response = await service.getSP(payload);
+      console.log(12345, response)
+      if (response.code === 200) {
+        const columns = response.columns.map((item) => ({
+          Header: item.value,
+          accessor: item.key,
+        }));
+        setColumns(columns);
+        setData(response.data);
+      } else {
+        setMessage(response.alert);
+        setShowError(true);
+      }
+    }
   };
 
   const validateDriver = () => {
@@ -109,13 +106,29 @@ const CallSP = () => {
           </table>
         </Col>
         <Col md="4">
-          <Button
-            type="button"
-            className="btn btn-success"
-            onClick={handleCallSP}
-          >
-            <i className="fa fa-check"></i> Enviar
-          </Button>
+          <Row>
+            <Row>
+              <InputDB
+                colMain="12"
+                colLabel="1"
+                colComponent="11"
+                icon="ti-menu-alt"
+                label="SP:"
+                name="procedure"
+                value={procedure}
+                change={(e) => setProcedure(e.target.value)}
+              />
+            </Row>
+            <Row>
+              <Button
+                type="button"
+                className="btn btn-success"
+                onClick={handleCallSP}
+              >
+                <i className="fa fa-check"></i> Enviar
+              </Button>
+            </Row>
+          </Row>
         </Col>
       </Row>
       <Row>
