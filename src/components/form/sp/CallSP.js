@@ -40,8 +40,6 @@ const CallSP = () => {
       })),
     };
 
-    console.log(123, payload);
-
     if (validateDriver()) {
       setShowError(true);
       setMessage({
@@ -51,7 +49,7 @@ const CallSP = () => {
       });
     } else {
       const response = await service.getSP(payload);
-      console.log(12345, response)
+      // console.log(12345, response)
       if (response.code === 200) {
         const columns = response.columns.map((item) => ({
           Header: item.value,

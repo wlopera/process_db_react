@@ -52,7 +52,6 @@ class DatabaseService {
   getSP(data) {
     try {
       return http.post(`${PATH_API}/callSP`, data).then((response) => {
-        console.log(77777, response)
         if (response.data.code === 200) {
           if (response.data.data.length > 0) {
             return {
