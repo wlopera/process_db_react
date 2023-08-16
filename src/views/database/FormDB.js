@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import QueryForm from "../../components/form/QueryForm";
-import SPForm from '../../components/form/SPForm'
+import SPForm from "../../components/form/SPForm";
 
-const FormDB = () => {
+const FormDB = (props) => {
   const [activeTab, setActiveTab] = useState("1");
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  const params = props.location.params;
 
   return (
     <div>
@@ -37,10 +39,10 @@ const FormDB = () => {
       </Nav>
       <TabContent className="p-4" activeTab={activeTab}>
         <TabPane tabId="1">
-          <QueryForm />
+          <QueryForm typeDB={params.typeDB} />
         </TabPane>
         <TabPane tabId="2">
-          <SPForm />
+          <SPForm typeDB={params.typeDB}/>
         </TabPane>
       </TabContent>
     </div>

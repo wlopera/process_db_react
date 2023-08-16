@@ -148,7 +148,7 @@ const Sidebar = (props) => {
                                 </Collapse>
                               </li>
                             );
-                          } else {
+                          } else {      
                             return (
                               <li
                                 onClick={scrollTop}
@@ -160,10 +160,15 @@ const Sidebar = (props) => {
                                 key={key}
                               >
                                 <NavLink
-                                  to={prop.path}
+                                  //to={prop.path}
+                                  to={{
+                                    pathname: prop.path,                                   
+                                    params: prop.params ? prop.params : null
+                                  }}
                                   className="sidebar-link"
                                   activeClassName="active"
                                   onClick={showMobilemenu}
+                                 
                                 >
                                   <i className={prop.icon} />
                                   <span className="hide-menu">{prop.name}</span>

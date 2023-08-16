@@ -9,7 +9,7 @@ import "react-table/react-table.css";
 import "./CallSP.css";
 import InputDB from "../../input/InputDB";
 
-const CallSP = () => {
+const CallSP = ({ typeDB }) => {
   const [showError, setShowError] = useState(false);
   const [message, setMessage] = useState("");
   const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ const CallSP = () => {
 
   const { host, database, user, password } = useSelector(
     (state) => state.databaseReducer
-  );
+  )[typeDB];
 
   const params = useSelector((state) => state.paramsReducer.params);
 
@@ -38,6 +38,7 @@ const CallSP = () => {
         value: param.value,
         type: param.type,
       })),
+      typeDB,
     };
 
     if (validateDriver()) {

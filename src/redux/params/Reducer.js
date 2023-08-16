@@ -5,7 +5,7 @@ import {
   DETAILS_PARAM,
 } from "../constants";
 
-import ParamsData from "../../data/params/ParamsData";
+import ParamsData from "../../data/ParamsData";
 
 const INIT_STATE = {
   params: ParamsData,

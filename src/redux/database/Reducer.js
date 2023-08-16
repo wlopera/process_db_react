@@ -1,19 +1,19 @@
 import { UPDATE_FILTER } from "../constants";
 
-const INIT_STATE = {
-  host: "localhost",
-  database: "site",
-  user: "root",
-  password: "",
-};
-export default (state = INIT_STATE, action) => {
-  const { type, name, value } = action;
+import DriversData from "../../data/DriversData";
+
+const INIT_STATE = DriversData;
+
+export default (state = DriversData, action) => {
+  const { type, name, value, db } = action;
 
   switch (type) {
     case UPDATE_FILTER:
+      let updateDriver = state[db];
+      updateDriver[name] = value;
       return {
         ...state,
-        [name]: value,
+        updateDriver,
       };
     default:
       return state;

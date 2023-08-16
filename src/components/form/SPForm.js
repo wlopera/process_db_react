@@ -4,7 +4,7 @@ import classnames from "classnames";
 import Params from "./sp/Params";
 import CallSP from "./sp/CallSP";
 
-const SPForm = () => {
+const SPForm = ({ typeDB }) => {
   const [activeTab, setActiveTab] = useState("1");
 
   const toggle = (tab) => {
@@ -40,7 +40,7 @@ const SPForm = () => {
           <Params />
         </TabPane>
         <TabPane tabId="2">
-           <CallSP/>
+          <CallSP typeDB={typeDB} />
         </TabPane>
       </TabContent>
     </div>

@@ -103,6 +103,7 @@ export default (props) => {
                         path={prop2.path}
                         component={prop2.component}
                         key={key2}
+                        test="prueba"
                       />
                     );
                   });

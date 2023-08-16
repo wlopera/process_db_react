@@ -6,16 +6,16 @@ import { Card, CardBody, CardTitle, Row, Col, Form } from "reactstrap";
 import InputDB from "../../components/input/InputDB";
 import { updateFilter } from "../../redux/database/Action";
 
-const FilterDB = () => {
-  const { host, database, user, password } = useSelector(
-    (state) => state.databaseReducer
-  );
+const FilterDB = (props) => {
+  const params = props.location.params;
+  const drivers = useSelector((state) => state.databaseReducer);
+  const { host, database, user, password } = drivers[params.typeDB];
 
   const dispatch = useDispatch();
 
   const handleInput = (event) => {
     const { name, value } = event.target;
-    dispatch(updateFilter({ name, value }));
+    dispatch(updateFilter({ name, value, db: params.typeDB }));
   };
 
   return (

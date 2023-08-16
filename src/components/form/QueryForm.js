@@ -8,7 +8,7 @@ import service from "../../services/database.service";
 
 import "react-table/react-table.css";
 
-const QueryForm = () => {
+const QueryForm = ({ typeDB }) => {
   const [query, setQuery] = useState("SELECT * FROM libros");
   const [showError, setShowError] = useState(false);
   const [message, setMessage] = useState("");
@@ -17,7 +17,7 @@ const QueryForm = () => {
 
   const { host, database, user, password } = useSelector(
     (state) => state.databaseReducer
-  );
+  )[typeDB];
 
   const handleQuery = (event) => {
     setQuery(event.target.value);
@@ -42,7 +42,7 @@ const QueryForm = () => {
         user,
         password,
         query,
-        type: "MYSQL",
+        typeDB,
       });
       if (response.code === 200) {
         const columns = response.columns.map((item) => ({
@@ -57,6 +57,8 @@ const QueryForm = () => {
       }
     }
   };
+
+  console.log(4444, host);
 
   const validateDriver = () => {
     if (host.trim().length === 0) {
