@@ -37,7 +37,7 @@ const SPForm = ({ typeDB }) => {
       </Nav>
       <TabContent className="p-4" activeTab={activeTab}>
         <TabPane tabId="1">
-          <Params />
+          <Params typeDB={typeDB}/>
         </TabPane>
         <TabPane tabId="2">
           <CallSP typeDB={typeDB} />

@@ -15,53 +15,61 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
+  const dataParams = state.params;
   switch (action.type) {
     case ADD_PARAM:
       const newRecord = {
         id: action.id,
         label: action.label,
         value: action.value,
-        type: "IN",
+        type: action.typeObj,
       };
-      const addParam = [...state.params, newRecord];
+
+      dataParams[action.db].push(newRecord);
+
       return {
         ...state,
-        params: addParam,
+        params: dataParams,
         edit: true,
         show: true,
         currentParam: newRecord,
       };
 
     case UPDATE_PARAM:
-      const updateParam = state.params.map((param) =>
-        param.id === action.id
-          ? {
-              ...param,
-              label: action.label,
-              value: action.value,
-              type: action.typeObj,
-            }
-          : param
+      // Buscar el índice del registro a actualizar en el arreglo
+      const indexToUpdate = dataParams[action.db].findIndex(
+        (item) => item.id === action.id
       );
+
+      const updateData = {
+        id: action.id,
+        label: action.label,
+        value: action.value,
+        type: action.typeObj,
+      };
+
+      if (indexToUpdate !== -1) {
+        // Actualizar el registro en el arreglo "mysql"
+        dataParams[action.db][indexToUpdate] = updateData;
+      }
 
       return {
         ...state,
-        params: updateParam,
+        params: dataParams,
         edit: true,
         show: true,
-        currentParam: {
-          id: action.id,
-          label: action.label,
-          value: action.value,
-          type: action.typeObj,
-        },
+        currentParam: updateData,
       };
 
     case DELETE_PARAM:
-      const filter = state.params.filter((param) => param.id !== action.id);
+      // Filtrar los registros excluyendo el registro a borrar
+      dataParams[action.db] = dataParams[action.db].filter(
+        (item) => item.id !== recordToDeleteId
+      );
+
       return {
-        ...state,
-        params: filter,
+        ...data,
+        params: dataParams,
         edit: false,
         show: false,
         currentParam: {},
@@ -77,6 +85,7 @@ export default (state = INIT_STATE, action) => {
           label: action.param.label,
           value: action.param.value,
           type: action.param.type,
+          db: action.db,
         },
       };
 

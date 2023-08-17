@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import { updateParam } from "../../redux/params/Action";
 
-const ParameterDetails = () => {
+const ParameterDetails = ({typeDB}) => {
   const {
     edit,
     show,
@@ -25,7 +25,7 @@ const ParameterDetails = () => {
       ...param,
       [name]: value,
     };
-    dispatch(updateParam(param.id, payload.label, payload.value, payload.type));
+    dispatch(updateParam(param.id, payload.label, payload.value, payload.type, typeDB));
   };
 
   const handleDropDown = (event) => {
@@ -33,7 +33,7 @@ const ParameterDetails = () => {
       ...param,
       type: event.target.name,
     };
-    dispatch(updateParam(param.id, payload.label, payload.value, payload.type));
+    dispatch(updateParam(param.id, payload.label, payload.value, payload.type, typeDB));
   };
 
   return show ? (

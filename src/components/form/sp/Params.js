@@ -1,16 +1,10 @@
 import React, { useState, Fragment } from "react";
-import { useSelector } from "react-redux";
 
 import Parameters from "../../procedure/Parameters";
 import ParameterDetails from "../../procedure/ParameterDetails";
 
-const Params = () => {
+const Params = ({ typeDB }) => {
   const [showRight, setshowRight] = useState(false);
-
-  const params = useSelector(
-    (state) =>
-      state.paramsReducer.params
-  );
 
   const showRightPart = () => {
     setshowRight(!showRight);
@@ -26,7 +20,10 @@ const Params = () => {
               (showRight === true ? "show-right-left-panel" : "")
             }
           >
-            <Parameters showRightPart={showRightPart} params={params} />
+            <Parameters
+              showRightPart={showRightPart}
+              typeDB={typeDB}
+            />
           </div>
           <div
             className={
@@ -48,7 +45,7 @@ const Params = () => {
               <i className="fas fa-times"></i>
             </span>
             <div>
-              <ParameterDetails />
+              <ParameterDetails typeDB={typeDB} />
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ const CallSP = ({ typeDB }) => {
     (state) => state.databaseReducer
   )[typeDB];
 
-  const params = useSelector((state) => state.paramsReducer.params);
+  const params = useSelector((state) => state.paramsReducer.params)[typeDB];
 
   const handleCallSP = async (event) => {
     event.preventDefault();

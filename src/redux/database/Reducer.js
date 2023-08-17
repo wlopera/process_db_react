@@ -4,7 +4,7 @@ import DriversData from "../../data/DriversData";
 
 const INIT_STATE = DriversData;
 
-export default (state = DriversData, action) => {
+export default (state = INIT_STATE, action) => {
   const { type, name, value, db } = action;
 
   switch (type) {
